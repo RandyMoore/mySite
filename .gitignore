@@ -1,0 +1,8 @@
+venv
+
+.pyc
+.idea
+.project
+.pydevproject
+__pycache__
+
