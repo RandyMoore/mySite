@@ -25,7 +25,7 @@ class EntryHandler(tornado.web.RequestHandler):
 
 class HomeHandler(tornado.web.RequestHandler):
     async def get(self):
-        self.render("home.html", entries=POSTS.values())
+        self.render("home.html", entries=sorted(POSTS.values(), key=lambda e: e['published'], reverse=True))
 
 
 class Application(tornado.web.Application):
@@ -56,9 +56,7 @@ async def run_server():
 
 def main():
     entry_path = os.path.join(os.path.dirname(__file__), "blog_entries") + '/'
-    print(entry_path)
     for file in glob(entry_path + "*.md"):
-        print(file)
         with open(file, "r") as entry_file:
             file_name = file.replace(entry_path, '').replace('.md', '')
             file_name_parts = file_name.split('-')
@@ -70,7 +68,6 @@ def main():
                 'published': datetime.strptime('-'.join(file_name_parts[:-1]), '%Y-%m-%d')
             }
             POSTS[file_name] = entry
-    print(POSTS)
     tornado.ioloop.IOLoop.current().run_sync(run_server)
 
 

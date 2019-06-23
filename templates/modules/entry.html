@@ -1,5 +1,25 @@
-<div class="entry">
-  <h1><a href="/entry/{{ entry['slug'] }}">{{ entry['title'] }}</a></h1>
-  <div class="date">{{ locale.format_date(entry['published'], full_format=True, shorter=True) }}</div>
-  <div class="body">{% raw entry['html'] %}</div>
-</div>
+{% extends "../base.html" %}
+
+{% block heading %}
+    <div class="site-heading">
+        <h1>
+            {{ entry['title'] }}
+        </h1>
+        <hr class="small">
+        <span class="subheadign">
+            {{ locale.format_date(entry['published'], full_format=True, shorter=True) }}
+        </span>
+    </div>
+{% end %}
+
+{% block content %}
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {% raw entry['html']%}
+                </div>
+            </div>
+        </div>
+    </article>
+{% end %}

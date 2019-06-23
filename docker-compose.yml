@@ -1,4 +1,6 @@
 web:
   build: .
+  # volumes:
+  #   - .:/usr/src/app
   ports:
     - "80:8888"

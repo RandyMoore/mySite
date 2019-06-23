@@ -6,3 +6,4 @@ venv
 .pydevproject
 __pycache__
 
+dockerMachineCerts

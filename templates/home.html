@@ -1,7 +1,33 @@
 {% extends "base.html" %}
 
-{% block body %}
-  {% for entry in entries %}
-    {% module Entry(entry) %}
-  {% end %}
+{% block heading %}
+    <div class="site-heading">
+        <h1>Randy Moore</h1>
+        <hr class="small">
+        <span class="subheading">
+            Software Engineer Passionate about Quality and Impact
+        </span>
+    </div>
+{% end %}
+
+{% block content %}
+    {% for entry in entries %}
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-preview">
+                        <h1 class="post-title">
+                            <a href="/entry/{{ entry['slug'] }}">
+                                {{ entry['title'] }}
+                            </a>
+                        </h1>
+                        <p class="post-meta">{{ locale.format_date(entry['published'], full_format=True, shorter=True) }}</p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </article>
+    <hr>
+    {% end %}
 {% end %}
