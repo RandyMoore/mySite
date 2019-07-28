@@ -2,10 +2,10 @@ from datetime import datetime
 from glob import glob
 import os
 import markdown
+from mdx_gfm import GithubFlavoredMarkdownExtension
 import tornado.ioloop
 import tornado.locks
 import tornado.web
-import urllib.parse
 
 POSTS = {}
 
@@ -64,7 +64,7 @@ def main():
             entry = {
                 'slug': file_name,
                 'title': title,
-                'html': markdown.markdown(entry_file.read()),
+                'html': markdown.markdown(entry_file.read(), extensions=[GithubFlavoredMarkdownExtension()]),
                 'published': datetime.strptime('-'.join(file_name_parts[:-1]), '%Y-%m-%d')
             }
             POSTS[file_name] = entry
