@@ -5,7 +5,7 @@ Django models offers an ORM API that abstracts the database layer.  There are ma
 As an example, consider the following models:
 <img src="/static/images/DjangoDeletionOrderExample.png"/ width=100%>
 
-Presume the developers that created your database schema did not have lunch often with the developers who created the software using the database. The software was written to create the instances from the bottom up, `OrderLine`s, `Order`s from `OrderLine`s, then `OrderReport`s from `Order`s.  This has a robustness advantage; as soon as an entity is defined it is saved to the database. The software may do something like this:
+Presume the developers that created your database schema did not have lunch often with the developers who created the software using the database. The software was written to create the instances from the bottom up. First `OrderLine`s, then `Order`s from `OrderLine`s, then `OrderReport`s from `Order`s.  This has a robustness advantage; as soon as an entity is defined it is saved to the database. The software may do something like this:
 
 
     # Somebody bought some things from us! Hooray!
@@ -27,9 +27,11 @@ But since the `OrderReport` instance was only used to generate a report it is no
 
     report.delete()
 
-A few weeks later you go to access the `OrderLine`s of the `Order` again, but find they no longer exist. Oh snap! What happened?
+A few weeks later you go to access the `OrderLine`s of the `Order` again, but find they no longer exist. 
 
-What happened is the database developers decided to be nice and provide convenience features.  They made it so you could create an `OrderLine` first, then create an `Order` from `OrderLine`s, as in the above code. To have this behavior, they told Django in the `ForeignKey` declaration it was OK for a child to be created without a parent with the argument
+Oh snap! What happened?
+
+What happened is the database developers decided to be nice and provide convenience features.  They made it so you could create an `OrderLine` first, then create an `Order` from `OrderLine`s, as in the above code. To have this behavior, they told Django in the `ForeignKey` declaration it was OK for a child (`OrderLine`) to be created without a parent (`Order`) with the argument
 
     null=True
 
@@ -42,11 +44,11 @@ This is why when the software deleted the `OrderReport`, all the `Order`s and `O
 
 This may seem like a contrived example, but happens often in real life, especially before Django 2.0 came out. As in the [release notes](https://docs.djangoproject.com/en/2.0/releases/2.0/)
 
-> The on_delete argument for ForeignKey and OneToOneField is now required in models and migrations. Consider squashing migrations so that you have fewer of them to update.
+> The on_delete argument for ForeignKey and OneToOneField is now required in models and migrations.
 
-Before version 2.0, the `on_delete` argument [defaulted to CASCADE](https://docs.djangoproject.com/en/1.11/ref/models/fields/#django.db.models.ForeignKey). So if your dev team created models, but forgot to include the `on_delete` parameter, did not test properly, data loss could easily happen.
+Before version 2.0, the `on_delete` argument [defaulted to CASCADE](https://docs.djangoproject.com/en/1.11/ref/models/fields/#django.db.models.ForeignKey). So if your dev team created models, but forgot to include the `on_delete` parameter, and did not test properly then data loss could easily happen.
 
-If you would like to play around with this example, and also the permutations without replacement of \[One, Many\] X \[CASCADE, SET_NULL, PROTECT\], see [this sandbox project which provides a Dockerized Jupyter environment on a Django project](https://github.com/RandyMoore/DjangoDeletion).  The models have the ability to report what children they have, and all models report when they are being deleted.
+If you would like to play around with this example, and also the combinations of \[One, Many\] X \[CASCADE, SET_NULL, PROTECT\], see [this sandbox project which provides a Dockerized Jupyter environment on a Django project](https://github.com/RandyMoore/DjangoDeletion).  The models have the ability to report what children they have, and all models report when they are being deleted.
 
 [Model definitions (including those used by the example code)](https://github.com/RandyMoore/DjangoDeletion/blob/master/delete_example/models.py)
 
