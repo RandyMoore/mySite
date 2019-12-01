@@ -13,5 +13,5 @@ Having a single source of truth in a language agnostic data format opens the doo
 emerge from self-organizing teams.
 
 ## An Example You Can Play With
-This example demonstrates generating a Javascript SDK and a Flask server from an [OAS](https://github.com/RandyMoore/OAS/blob/master/openapi/oas.yaml). It includes a simple demo showing usage of the Javascript SDK to fetch a resource from the server. Additionally, an example is provided for how to generate a stand alone server provding a Swagger UI page to document the API per the declared OAS.
+Here is an example demonstrating generation of a Javascript SDK and a Flask server from an [OAS](https://github.com/RandyMoore/OAS/blob/master/openapi/oas.yaml). It includes a simple demo showing usage of the Javascript SDK to fetch a resource from the server. Additionally, an example is provided for how to generate a stand alone server hosting a Swagger UI page to document the API per the declared OAS.
 https://github.com/RandyMoore/OAS
